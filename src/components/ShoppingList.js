@@ -15,6 +15,14 @@ function ShoppingList({ items }) {
     setSearch(e.target.value)
   }
 
+  //update itemsToDisplay to have search
+
+  const itemsInSearch = items.filter(item => {
+    if (search === '') return true
+
+    return item.name.includes(search)
+  })
+
   const itemsToDisplay = items.filter((item) => {
     if (selectedCategory === "All") return true;
 
@@ -24,9 +32,9 @@ function ShoppingList({ items }) {
   return (
     <div className="ShoppingList">
       <ItemForm />
-      <Filter onCategoryChange={handleCategoryChange} onSearchChange={handleSearchChange}/>
+      <Filter search={search} onCategoryChange={handleCategoryChange} onSearchChange={handleSearchChange} />
       <ul className="Items">
-        {itemsToDisplay.map((item) => (
+        {itemsInSearch.map((item) => (
           <Item key={item.id} name={item.name} category={item.category} />
         ))}
       </ul>
